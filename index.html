@@ -150,6 +150,39 @@ details{border-radius:14px;background:#0e1012}details summary{padding:11px 2px!i
  .card:has(#gxCart) .cartrow{grid-template-columns:1fr 54px 30px}
  .card:has(#gxCart) .lineTotal{grid-column:1/-1}
 }
+
+/* Checkout layout v2 — visible mobile redesign */
+#compareTab>.controls:before{content:"1  CHOOSE PRODUCT";display:block;grid-column:1/-1;font-size:10px;font-weight:900;letter-spacing:.13em;color:#f3c623;margin-bottom:-3px}
+#compareTab>.card:has(#products):before{content:"2  COMPARE";display:block;font-size:10px;font-weight:900;letter-spacing:.13em;color:#f3c623;margin-bottom:10px}
+.card:has(#gxCart){border-color:#494019;background:linear-gradient(180deg,#171811,#131518)}
+.card:has(#gxCart)>h2{font-size:23px!important;letter-spacing:-.03em!important}
+.card:has(#gxCart)>h2:after{content:"3  CHECKOUT";display:inline-block;margin-left:9px;color:#f3c623;font-size:9px;letter-spacing:.12em;vertical-align:middle}
+.card:has(#gxCart)>.compare>.shop{position:relative}
+.card:has(#gxCart)>.compare>.shop>h3:after{content:none!important}
+.card:has(#gxCart)>.compare>.shop>h3{font-size:14px!important}
+.card:has(#gxCart) .summary{margin-top:8px!important}
+.card:has(#gxCart) .sum:not(.finalCost){background:#0d0f11;border-color:#25282c}
+.card:has(#gxCart) .finalCost{background:#1c190b!important;border:1px solid #665515!important}
+.card:has(#gxCart) .finalCost .small{color:#d0b64b}
+#cartCompare{background:#0d0f11;border:1px solid #303238!important;text-align:center;padding:12px!important}
+.usdtBuy{margin-top:10px!important;border:2px solid #f3c623!important;background:#f3c623!important;color:#101113!important}
+.usdtBuy>span,.usdtBuy>small{color:#36320f!important}.usdtBuy>strong{color:#101113!important;font-size:32px!important}
+.orderTools{border-top:0!important}.generateOrder{background:#f3c623!important;color:#101113!important;border-color:#f3c623!important;font-weight:900!important}
+@media(max-width:700px){
+ #compareTab>.card{margin-top:10px}
+ #compareTab>.card:has(#products){padding:12px}
+ #products .compare{display:grid!important;grid-template-columns:1fr 1fr!important}
+ .card:has(#gxCart){padding:16px 14px!important}
+ .card:has(#gxCart)>.compare{display:grid!important;grid-template-columns:1fr!important;gap:0!important}
+ .card:has(#gxCart)>.compare>.shop{padding:10px 0!important}
+ .card:has(#gxCart)>.compare>.shop+.shop{margin-top:4px!important;padding-top:14px!important}
+ .card:has(#gxCart) .cartrow{padding:8px 0!important}
+ .card:has(#gxCart) .summary{grid-template-columns:.85fr 1.15fr!important}
+ .card:has(#gxCart) .sum{padding:9px!important}
+ .card:has(#gxCart) .finalCost strong{font-size:23px!important}
+ .usdtBuy{display:flex!important;flex-wrap:wrap!important;justify-content:space-between!important;align-items:center!important}
+ .usdtBuy>span{width:45%}.usdtBuy>strong{width:52%;text-align:right}.usdtBuy>small{width:100%}
+}
 </style></head><body><div class="wrap">
 <div class="top"><div><h1>GENXELL vs TRANMOO</h1><div class="sub">Compare prices or organise a shared order</div></div></div><div class="tabs"><button class="tabBtn active" id="compareBtn" onclick="showTab('compare')">Price Compare</button><button class="tabBtn" id="sharedBtn" onclick="showTab('shared')">Shared Order</button></div><div id="compareTab">
 <div class="card controls"><div class="field picker categoryField"><label>Category</label><input type="hidden" id="categorySelect" value="Peptides"><div class="categoryButtons"><button type="button" class="categoryBtn active" data-category="Peptides" onclick="setCategory('Peptides')">Peptides</button><button type="button" class="categoryBtn" data-category="Injectable Oils" onclick="setCategory('Injectable Oils')">Oils</button><button type="button" class="categoryBtn" data-category="Orals" onclick="setCategory('Orals')">Orals</button></div></div><div class="field picker"><label>Product</label><select id="productSelect"></select></div><div class="field picker strengthField"><label>Strength / size</label><input type="hidden" id="strengthSelect"><div class="strengthButtons" id="strengthButtons"></div></div><div class="field" style="grid-column:1/-1"><details><summary style="cursor:pointer;font-weight:700;padding:8px 0">⚙ Settings</summary><div class="settingsGrid"><div class="field"><label>USD → AUD rate</label><input id="fx" type="number" step="0.0001" value="1.4250"></div><div class="field"><label>GENXELL shipping (USD)</label><input id="shipping" type="number" step="1" value="50"></div><div class="field"><label>TRANMOO shipping (USD)</label><input id="tmShipping" type="number" step="1" value="50"></div><div class="field"><label>CoinSpot USDT buy fee</label><select id="coinspotFee"><option value="0.01" selected>Instant Buy — 1%</option><option value="0.001">Market order — 0.1%</option></select></div><div class="field"><label>CoinSpot USDT send fee</label><input id="tronFee" type="number" min="0" step="0.1" value="3"><span class="small">USDT · editable; confirm the current CoinSpot wallet fee before sending</span></div><div class="field shipSplitField"><label>Split shipping</label><div class="checkGroup"><label class="checkChoice"><input type="radio" name="shipSplit" value="1" checked><span>✓</span> Just me</label><label class="checkChoice"><input type="radio" name="shipSplit" value="2"><span>✓</span> Halves</label><label class="checkChoice"><input type="radio" name="shipSplit" value="3"><span>✓</span> Thirds</label></div></div></div></details></div></div>
