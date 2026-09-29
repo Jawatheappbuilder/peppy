@@ -12,6 +12,35 @@
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.shop{border:1px solid var(--line);border-radius:12px;padding:12px}.shop h3{margin:0 0 8px;font-size:16px}.shopprice{font-size:22px;font-weight:800}.winner{border-color:#86efac;background:#f0fdf4}.saving{font-size:12px;color:var(--good);font-weight:700;margin-top:5px}.tiers{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}.sum{background:#f8fafc;border-radius:12px;padding:12px}.sum strong{font-size:22px;display:block;margin-top:3px}.ship{display:flex;gap:8px;align-items:center;margin:10px 0}.note{font-size:12px;color:var(--muted);line-height:1.45}.empty{text-align:center;color:var(--muted);padding:20px}
 @media(max-width:650px){.compare{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.controls .picker{grid-column:1/-1}.cartrow{grid-template-columns:1fr auto auto}.cartrow .lineTotal{grid-column:1/3}.summary{grid-template-columns:1fr}}
 .settingsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}.shop{border:1px solid var(--line);border-radius:14px;padding:12px}.shop h3{margin:0 0 10px}.compare .cartrow{grid-template-columns:1fr 58px 34px;gap:8px}.compare .lineTotal{grid-column:1/-1;text-align:right}.compare .summary{margin-top:10px}details summary::-webkit-details-marker{display:none}@media(max-width:700px){.controls{grid-template-columns:1fr 1fr}.controls .field:nth-child(3){grid-column:1/-1}.settingsGrid{grid-template-columns:1fr}.compare{grid-template-columns:1fr}.wrap{padding:12px}.card{padding:12px}.compare .cartrow{grid-template-columns:1fr 58px 34px}}
+
+/* 2026 visual refresh */
+body{background:linear-gradient(180deg,#f3f6fb 0,#f8fafc 260px);letter-spacing:-.01em}
+.wrap{max-width:920px;padding:22px 16px 40px}
+.top{padding:10px 2px 4px;align-items:center}
+h1{font-size:28px;letter-spacing:-.04em}.sub{font-size:14px;line-height:1.4}
+.card{border:1px solid #e7ebf1;border-radius:20px;padding:18px;box-shadow:0 8px 28px rgba(23,32,51,.055);margin-top:16px}
+.controls{grid-template-columns:1fr 1fr;gap:12px}
+.field label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#7b8494}
+.field input,.field select{padding:13px 14px;border-radius:12px;border-color:#dfe4eb;font-weight:650;outline:none}
+.field input:focus,.field select:focus{border-color:#8da8e8;box-shadow:0 0 0 3px rgba(37,99,235,.09)}
+#products>.name,.name{letter-spacing:-.025em}
+.compare{gap:12px;margin-top:12px}
+.shop{background:#fafbfc;border-color:#e6e9ee;border-radius:16px;padding:14px;position:relative}
+.shop.winner{background:#f1fbf6;border-color:#b8e7d1;box-shadow:inset 0 0 0 1px #d7f2e5}
+.shop.winner:before{content:"BETTER PRICE";display:inline-block;font-size:9px;font-weight:900;letter-spacing:.08em;color:#087f5b;background:#dff5e9;border-radius:999px;padding:4px 7px;margin-bottom:7px}
+.shop h3{font-size:13px;letter-spacing:.04em;margin:0 0 7px}
+.shopprice{font-size:22px;font-weight:850;letter-spacing:-.035em}.shopprice .aud{font-size:14px;font-weight:700}
+.tiers{font-size:12px;color:#7a8290;line-height:1.55;margin-top:5px}
+.saving{margin-top:11px;padding:10px 12px;background:#f5f7fa;border-radius:11px;font-weight:750;text-align:center}
+.add{padding:13px!important;border-radius:12px!important;font-size:15px;box-shadow:0 5px 12px rgba(37,99,235,.15)}
+.card>h2{letter-spacing:-.025em}
+.cartrow{padding:11px 0;border-bottom:1px solid #edf0f3}.cartrow:last-child{border-bottom:0}
+.qty{border:1px solid #dfe4eb!important;border-radius:10px!important}
+.summary{gap:8px}.sum{background:#f6f8fa;border-radius:12px;padding:11px 12px}.sum strong{font-size:19px}
+#cartCompare{font-size:14px;text-align:center;padding:12px;border-radius:12px;background:#eef7f2;color:#126342}
+details{background:#f7f8fa;border-radius:12px;padding:0 12px}details[open]{padding-bottom:12px}
+details summary{color:#626b79}
+@media(max-width:700px){.wrap{padding:14px 11px 32px}h1{font-size:25px}.card{border-radius:17px;padding:14px}.controls{grid-template-columns:1fr}.controls .field:nth-child(3){grid-column:auto}.compare{grid-template-columns:1fr 1fr;gap:8px}.shop{padding:11px}.shopprice{font-size:18px}.tiers{font-size:11px}.settingsGrid{grid-template-columns:1fr}.card:has(#gxCart) .compare{grid-template-columns:1fr}.sub{max-width:300px}}
 </style></head><body><div class="wrap">
 <div class="top"><div><h1>GENXELL vs TRANMOO</h1><div class="sub">Compare the same product and strength side-by-side in USD & AUD</div></div><div class="small" id="count"></div></div>
 <div class="card controls"><div class="field picker"><label>Category</label><select id="categorySelect"><option>Peptides</option><option>Injectable Oils</option><option>Orals</option></select></div><div class="field picker"><label>Product</label><select id="productSelect"></select></div><div class="field picker"><label>Strength / size</label><select id="strengthSelect"></select></div><div class="field" style="grid-column:1/-1"><details><summary style="cursor:pointer;font-weight:700;padding:8px 0">⚙ Settings</summary><div class="settingsGrid"><div class="field"><label>USD → AUD rate</label><input id="fx" type="number" step="0.0001" value="1.4250"></div><div class="field"><label>GENXELL shipping (USD)</label><input id="shipping" type="number" step="1" value="50"></div><div class="field"><label>TRANMOO shipping (USD)</label><input id="tmShipping" type="number" step="1" value="50"></div></div></details></div></div>
