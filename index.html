@@ -71,7 +71,7 @@ details{background:#101214;border:1px solid #292c31}details summary{color:#d7d8d
 @media(max-width:700px){.cryptoEstimate{display:block}.cryptoEstimate .small:last-child{text-align:left;max-width:none;margin-top:5px}}
 </style></head><body><div class="wrap">
 <div class="top"><div><h1>GENXELL vs TRANMOO</h1><div class="sub">Compare the same product and strength side-by-side in USD & AUD</div></div><div class="small" id="count"></div></div>
-<div class="card controls"><div class="field picker"><label>Category</label><select id="categorySelect"><option>Peptides</option><option>Injectable Oils</option><option>Orals</option></select></div><div class="field picker"><label>Product</label><select id="productSelect"></select></div><div class="field picker"><label>Strength / size</label><select id="strengthSelect"></select></div><div class="field" style="grid-column:1/-1"><details><summary style="cursor:pointer;font-weight:700;padding:8px 0">⚙ Settings</summary><div class="settingsGrid"><div class="field"><label>USD → AUD rate</label><input id="fx" type="number" step="0.0001" value="1.4250"></div><div class="field"><label>GENXELL shipping (USD)</label><input id="shipping" type="number" step="1" value="50"></div><div class="field"><label>TRANMOO shipping (USD)</label><input id="tmShipping" type="number" step="1" value="50"></div><div class="field"><label>CoinSpot USDT buy fee</label><select id="coinspotFee"><option value="0.01" selected>Instant Buy — 1%</option><option value="0.001">Market order — 0.1%</option></select></div><div class="field"><label>CoinSpot USDT send fee</label><input id="tronFee" type="number" min="0" step="0.1" value="15"><span class="small">USDT · check CoinSpot wallet before sending</span></div><div class="field shipSplitField"><label>Split shipping</label><div class="checkGroup"><label class="checkChoice"><input type="radio" name="shipSplit" value="1" checked><span>✓</span> Just me</label><label class="checkChoice"><input type="radio" name="shipSplit" value="2"><span>✓</span> Halves</label><label class="checkChoice"><input type="radio" name="shipSplit" value="3"><span>✓</span> Thirds</label></div></div></div></details></div></div>
+<div class="card controls"><div class="field picker"><label>Category</label><select id="categorySelect"><option>Peptides</option><option>Injectable Oils</option><option>Orals</option></select></div><div class="field picker"><label>Product</label><select id="productSelect"></select></div><div class="field picker"><label>Strength / size</label><select id="strengthSelect"></select></div><div class="field" style="grid-column:1/-1"><details><summary style="cursor:pointer;font-weight:700;padding:8px 0">⚙ Settings</summary><div class="settingsGrid"><div class="field"><label>USD → AUD rate</label><input id="fx" type="number" step="0.0001" value="1.4250"></div><div class="field"><label>GENXELL shipping (USD)</label><input id="shipping" type="number" step="1" value="50"></div><div class="field"><label>TRANMOO shipping (USD)</label><input id="tmShipping" type="number" step="1" value="50"></div><div class="field"><label>CoinSpot USDT buy fee</label><select id="coinspotFee"><option value="0.01" selected>Instant Buy — 1%</option><option value="0.001">Market order — 0.1%</option></select></div><div class="field"><label>CoinSpot USDT send fee</label><input id="tronFee" type="number" min="0" step="0.1" value="1"><span class="small">USDT · editable; confirm the current CoinSpot wallet fee before sending</span></div><div class="field shipSplitField"><label>Split shipping</label><div class="checkGroup"><label class="checkChoice"><input type="radio" name="shipSplit" value="1" checked><span>✓</span> Just me</label><label class="checkChoice"><input type="radio" name="shipSplit" value="2"><span>✓</span> Halves</label><label class="checkChoice"><input type="radio" name="shipSplit" value="3"><span>✓</span> Thirds</label></div></div></div></details></div></div>
 <div class="card"><div id="products"></div></div>
 <div class="card"><h2 style="font-size:18px;margin:0 0 6px">Price comparison</h2><div class="compare"><div class="shop"><h3>GENXELL</h3><div id="gxCart"></div><div class="summary"><div class="sum"><span class="small">Estimated AUD</span><strong id="gxAud">A$0.00</strong></div></div></div><div class="shop"><h3>TRANMOO</h3><div id="tmCart"></div><div class="summary"><div class="sum"><span class="small">Estimated AUD</span><strong id="tmAud">A$0.00</strong></div></div></div></div><div id="cartCompare" class="note" style="margin-top:12px"></div><p class="note">Shipping is included automatically. You can split the shipping cost between 2 or 3 people in Settings. Bulk pricing is applied automatically when your quantity qualifies.</p><div class="orderTools"><div class="cryptoEstimate"><div><span class="small">CoinSpot payment estimate</span><strong id="cryptoEstimate">—</strong><div class="small" id="cryptoAud">—</div></div><div class="small" id="cryptoNote">Includes your order, shipping share, CoinSpot purchase fee and USDT send fee.</div></div><button class="generateOrder" onclick="generateOrder()">Generate order message</button><div id="orderBox" class="orderBox" hidden><div class="orderBoxHead"><b>Order message</b><button onclick="copyOrder()">Copy</button></div><textarea id="orderText" readonly></textarea></div></div></div>
 </div><script>
@@ -95,6 +95,22 @@ function setQty(code,v){let c=cart.find(x=>x.code===code);c.qty=Math.max(1,parse
 function setUnit(code,v){cart.find(x=>x.code===code).unit=v;drawCart()}
 function removeItem(code){cart=cart.filter(x=>x.code!==code);drawCart()}
 
+function vialCount(text){
+ const s=String(text||'');
+ let m=s.match(/(?:x|\*)\s*(\d+)\s*vials?/i)||s.match(/(\d+)\s*vials?/i);
+ return m?Math.max(1,Number(m[1])):1;
+}
+function totalVialsFor(supplier){
+ return cart.reduce((sum,c)=>{let x=items.find(i=>i.code===c.code);if(!x)return sum;if(supplier==='TRANMOO'){let t=tmFor(c.code);if(!t)return sum;return sum+vialCount(t.spec)*c.qty}return sum+vialCount(x.dosage)*c.qty},0);
+}
+function landedPerVial(supplier,c,fx){
+ let x=items.find(i=>i.code===c.code);if(!x)return 0;
+ let split=Math.max(1,Number(document.querySelector('input[name="shipSplit"]:checked')?.value)||1);
+ let shipping=((supplier==='TRANMOO'?Number($('tmShipping').value):Number($('shipping').value))||0)/split;
+ let allVials=totalVialsFor(supplier)||1;
+ if(supplier==='TRANMOO'){let t=tmFor(c.code);if(!t)return 0;return ((tmPrice(t,c.qty)/vialCount(t.spec))+(shipping/allVials))*fx}
+ return ((unitPrice(x,c.qty,c.unit)/vialCount(x.dosage))+(shipping/allVials))*fx;
+}
 function orderTotals(){
  let split=Math.max(1,Number(document.querySelector('input[name="shipSplit"]:checked')?.value)||1);
  let gxSub=cart.reduce((sum,c)=>{let x=items.find(i=>i.code===c.code);return sum+unitPrice(x,c.qty,c.unit)*c.qty},0);
@@ -105,7 +121,7 @@ function generateOrder(){
  if(!cart.length){alert('Add something to the cart first.');return}
  const t=orderTotals();
  const supplier=t.allMatched&&t.tmTotal<t.gxTotal?'TRANMOO':'GENXELL';
- const lines=cart.map(c=>{let x=items.find(i=>i.code===c.code);let code=c.code;if(supplier==='TRANMOO'){let m=tmFor(c.code);if(m)code=m.code}let name=(x.name||'').replace(/^undefined\s*/i,'').trim();return `• ${code} — ${name} — Qty: ${c.qty}`});
+ const lines=cart.map(c=>{let x=items.find(i=>i.code===c.code);let code=c.code,spec=x?.dosage||'';if(supplier==='TRANMOO'){let key=tmAliases[c.code]||c.code,m=tmFor(c.code);if(m){code=key;spec=m.spec||spec}}let name=(x?.name||'').replace(/^undefined\s*/i,'').trim();return `• ${code} — ${name}${spec?` — ${spec}`:''} — Qty: ${c.qty}`});
  $('orderText').value=`Hi, I'd like to place the following order:\n\n${lines.join('\n')}\n\nThank you.`;
  $('orderBox').hidden=false;$('orderBox').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
