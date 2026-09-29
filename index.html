@@ -103,12 +103,10 @@ function orderTotals(){
 }
 function generateOrder(){
  if(!cart.length){alert('Add something to the cart first.');return}
- const t=orderTotals(), fee=Math.max(0,Number($('tronFee').value)||0), buyFee=Math.max(0,Number($('coinspotFee').value)||0), fx=Number($('fx').value)||0;
+ const t=orderTotals();
  const supplier=t.allMatched&&t.tmTotal<t.gxTotal?'TRANMOO':'GENXELL';
- const total=supplier==='TRANMOO'?t.tmTotal:t.gxTotal;
- const lines=cart.map(c=>{let x=items.find(i=>i.code===c.code);let code=c.code,spec=x.dosage||'';if(supplier==='TRANMOO'){let m=tmFor(c.code);if(m){code=m.code;spec=m.spec}}return `• ${code} — ${x.name} — ${spec} — Qty: ${c.qty}`});
- const shipping=(supplier==='TRANMOO'?Number($('tmShipping').value):Number($('shipping').value))||0;
- $('orderText').value=`Hi, I'd like to place the following order:\n\n${lines.join('\n')}\n\nShipping: US${(shipping/t.split).toFixed(2)}${t.split>1?` (my 1/${t.split} share)`:''}\nOrder total: US${total.toFixed(2)}\nPayment: USDT (TRON / TRC20)\nEstimated USDT to buy on CoinSpot: ${((total+fee)*(1+buyFee)).toFixed(2)} USDT\nEstimated AUD out-of-pocket: ${aud((total+fee)*(1+buyFee)*fx)}\n\nPlease confirm availability and final total. Thank you.`;
+ const lines=cart.map(c=>{let x=items.find(i=>i.code===c.code);let code=c.code;if(supplier==='TRANMOO'){let m=tmFor(c.code);if(m)code=m.code}let name=(x.name||'').replace(/^undefined\s*/i,'').trim();return `• ${code} — ${name} — Qty: ${c.qty}`});
+ $('orderText').value=`Hi, I'd like to place the following order:\n\n${lines.join('\n')}\n\nThank you.`;
  $('orderBox').hidden=false;$('orderBox').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 async function copyOrder(){try{await navigator.clipboard.writeText($('orderText').value);event.target.textContent='Copied ✓';setTimeout(()=>event.target.textContent='Copy',1400)}catch(e){$('orderText').select();document.execCommand('copy')}}
