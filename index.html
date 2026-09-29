@@ -54,6 +54,6 @@ function drawCart(){
  $('tmAud').textContent=allMatched?aud(tmTotal*fx):'N/A';
  if(!cart.length)$('cartCompare').innerHTML=''; else if(!allMatched)$('cartCompare').innerHTML='<b>Some selected items are not in the TRANMOO catalogue, so a complete cart total cannot be compared.</b>'; else {let d=Math.abs(gxTotal-tmTotal);$('cartCompare').innerHTML=gxTotal===tmTotal?'<b>Both carts cost the same.</b>':gxTotal<tmTotal?`<b>GENXELL saves ${aud(d*fx)}</b>.`:`<b>TRANMOO saves ${aud(d*fx)}</b>.`;}
 }
-function render(){populateProducts();drawCart()}
+function render(){$('categorySelect').value='Peptides';populateProducts();const rt=items.find(x=>x.name==='Retatrutide'&&/^10mg\b/i.test(x.dosage||''));if(rt){$('productSelect').value=productKey(rt);populateStrengths();$('strengthSelect').value=rt.code;products()}drawCart()}
 $('categorySelect').addEventListener('change',populateProducts);$('productSelect').addEventListener('change',populateStrengths);$('strengthSelect').addEventListener('change',products);$('fx').addEventListener('input',()=>{products();drawCart()});$('shipping').addEventListener('input',drawCart);$('tmShipping').addEventListener('input',drawCart);render();
 </script></body></html>
