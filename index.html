@@ -41,9 +41,34 @@ h1{font-size:28px;letter-spacing:-.04em}.sub{font-size:14px;line-height:1.4}
 details{background:#f7f8fa;border-radius:12px;padding:0 12px}details[open]{padding-bottom:12px}
 details summary{color:#626b79}
 @media(max-width:700px){.wrap{padding:14px 11px 32px}h1{font-size:25px}.card{border-radius:17px;padding:14px}.controls{grid-template-columns:1fr}.controls .field:nth-child(3){grid-column:auto}.compare{grid-template-columns:1fr 1fr;gap:8px}.shop{padding:11px}.shopprice{font-size:18px}.tiers{font-size:11px}.settingsGrid{grid-template-columns:1fr}.card:has(#gxCart) .compare{grid-template-columns:1fr}.sub{max-width:300px}}
+
+/* Dark graphite + yellow refresh */
+:root{--bg:#0b0c0e;--card:#15171a;--ink:#f5f5f2;--muted:#9a9da3;--line:#292c31;--accent:#f3c623;--good:#f3c623;--bad:#ff6b6b}
+body{background:radial-gradient(circle at 50% -120px,#292b2f 0,#111316 360px,#090a0c 760px);color:var(--ink)}
+.top{padding-top:16px}.top h1{color:#fff}.sub{color:#a7aab0}
+.card{background:rgba(21,23,26,.96);border-color:#292c31;box-shadow:0 14px 40px rgba(0,0,0,.28)}
+.field label{color:#a3a6ac}
+.field input,.field select{background:#0f1113;color:#f6f6f3;border-color:#34373c;box-shadow:none}
+.field input:focus,.field select:focus{border-color:#f3c623;box-shadow:0 0 0 3px rgba(243,198,35,.12)}
+option,optgroup{background:#111315;color:#fff}
+details{background:#101214;border:1px solid #292c31}details summary{color:#d7d8da}
+.shop{background:#101214;border-color:#2c2f34}.shop.winner{background:#1b190d;border-color:#6e5d16;box-shadow:inset 0 0 0 1px rgba(243,198,35,.12)}
+.shop.winner:before{color:#0b0c0e;background:#f3c623}
+.shopprice{color:#fff}.shopprice .aud,.aud{color:#f3c623}.tiers,.meta,.small{color:#999da4}
+.saving{background:#202124;color:#f3c623;border:1px solid #303238}
+.add{background:#f3c623;color:#111;font-weight:850;box-shadow:0 7px 18px rgba(243,198,35,.14)}.add:hover{filter:brightness(1.05)}
+.cartrow{border-color:#292c31}.qty{background:#0d0f11!important;color:#fff!important;border-color:#34373c!important}
+.remove{color:#c8c9cc;background:#24262a;border-color:#34373c}
+.sum{background:#0f1113;border:1px solid #292c31}.sum strong{color:#f3c623}
+#cartCompare{background:#211d0b;color:#f5d85c;border:1px solid #514715}
+.empty{color:#8f9298}
+.checkGroup{display:flex;gap:7px;flex-wrap:wrap}.checkChoice{position:relative!important;display:flex!important;align-items:center;gap:7px;padding:10px 12px;border:1px solid #34373c;border-radius:11px;background:#0f1113;color:#c7c9cd!important;text-transform:none!important;letter-spacing:0!important;font-size:13px!important;font-weight:750!important;cursor:pointer}
+.checkChoice input{position:absolute;opacity:0;pointer-events:none;width:0}.checkChoice span{width:18px;height:18px;border:1px solid #555960;border-radius:5px;display:grid;place-items:center;color:transparent;font-size:12px}
+.checkChoice:has(input:checked){border-color:#f3c623;background:#211d0b;color:#fff!important}.checkChoice:has(input:checked) span{background:#f3c623;border-color:#f3c623;color:#111}
+@media(max-width:700px){body{background:radial-gradient(circle at 50% -60px,#25272b 0,#101214 300px,#090a0c 650px)}.compare{gap:8px}.checkGroup{display:grid;grid-template-columns:repeat(3,1fr)}.checkChoice{justify-content:center;padding:10px 6px}}
 </style></head><body><div class="wrap">
 <div class="top"><div><h1>GENXELL vs TRANMOO</h1><div class="sub">Compare the same product and strength side-by-side in USD & AUD</div></div><div class="small" id="count"></div></div>
-<div class="card controls"><div class="field picker"><label>Category</label><select id="categorySelect"><option>Peptides</option><option>Injectable Oils</option><option>Orals</option></select></div><div class="field picker"><label>Product</label><select id="productSelect"></select></div><div class="field picker"><label>Strength / size</label><select id="strengthSelect"></select></div><div class="field" style="grid-column:1/-1"><details><summary style="cursor:pointer;font-weight:700;padding:8px 0">⚙ Settings</summary><div class="settingsGrid"><div class="field"><label>USD → AUD rate</label><input id="fx" type="number" step="0.0001" value="1.4250"></div><div class="field"><label>GENXELL shipping (USD)</label><input id="shipping" type="number" step="1" value="50"></div><div class="field"><label>TRANMOO shipping (USD)</label><input id="tmShipping" type="number" step="1" value="50"></div><div class="field"><label>Split shipping</label><select id="shipSplit"><option value="1">Just me — full shipping</option><option value="2">Halves — 2 people</option><option value="3">Thirds — 3 people</option></select></div></div></details></div></div>
+<div class="card controls"><div class="field picker"><label>Category</label><select id="categorySelect"><option>Peptides</option><option>Injectable Oils</option><option>Orals</option></select></div><div class="field picker"><label>Product</label><select id="productSelect"></select></div><div class="field picker"><label>Strength / size</label><select id="strengthSelect"></select></div><div class="field" style="grid-column:1/-1"><details><summary style="cursor:pointer;font-weight:700;padding:8px 0">⚙ Settings</summary><div class="settingsGrid"><div class="field"><label>USD → AUD rate</label><input id="fx" type="number" step="0.0001" value="1.4250"></div><div class="field"><label>GENXELL shipping (USD)</label><input id="shipping" type="number" step="1" value="50"></div><div class="field"><label>TRANMOO shipping (USD)</label><input id="tmShipping" type="number" step="1" value="50"></div><div class="field shipSplitField"><label>Split shipping</label><div class="checkGroup"><label class="checkChoice"><input type="radio" name="shipSplit" value="1" checked><span>✓</span> Just me</label><label class="checkChoice"><input type="radio" name="shipSplit" value="2"><span>✓</span> Halves</label><label class="checkChoice"><input type="radio" name="shipSplit" value="3"><span>✓</span> Thirds</label></div></div></div></details></div></div>
 <div class="card"><div id="products"></div></div>
 <div class="card"><h2 style="font-size:18px;margin:0 0 6px">Price comparison</h2><div class="compare"><div class="shop"><h3>GENXELL</h3><div id="gxCart"></div><div class="summary"><div class="sum"><span class="small">Estimated AUD</span><strong id="gxAud">A$0.00</strong></div></div></div><div class="shop"><h3>TRANMOO</h3><div id="tmCart"></div><div class="summary"><div class="sum"><span class="small">Estimated AUD</span><strong id="tmAud">A$0.00</strong></div></div></div></div><div id="cartCompare" class="note" style="margin-top:12px"></div><p class="note">Shipping is included automatically. You can split the shipping cost between 2 or 3 people in Settings. Bulk pricing is applied automatically when your quantity qualifies.</p></div>
 </div><script>
@@ -76,7 +101,7 @@ function drawCart(){
    $('tmCart').innerHTML=cart.map(c=>{let x=items.find(i=>i.code===c.code),t=tmFor(c.code);if(!t)return `<div class="cartrow"><div><b>${x.name}</b><div class="small">${x.dosage||''}<br>Not listed by TRANMOO</div></div><span class="small">×${c.qty}</span><span></span><div class="lineTotal">—</div></div>`;let p=tmPrice(t,c.qty),total=p*c.qty;return `<div class="cartrow"><div><b>${x.name}</b><div class="small">${t.spec}<br>${aud(p*fx)} each${c.qty>=50?' · 50+ pricing':c.qty>=10?' · 10+ pricing':''}</div></div><input class="qty" type="number" min="1" value="${c.qty}" onchange="setQty('${c.code}',this.value)"><button class="remove" onclick="removeItem('${c.code}')">×</button><div class="lineTotal"><b>${aud(total*fx)}</b></div></div>`}).join('');
  }
  let gxSub=cart.reduce((sum,c)=>{let x=items.find(i=>i.code===c.code);return sum+unitPrice(x,c.qty,c.unit)*c.qty},0);
- let split=Math.max(1,Number($('shipSplit').value)||1);let gxTotal=gxSub+(Number($('shipping').value)||0)/split;
+ let split=Math.max(1,Number(document.querySelector('input[name="shipSplit"]:checked')?.value)||1);let gxTotal=gxSub+(Number($('shipping').value)||0)/split;
  let tmSub=0,allMatched=true;cart.forEach(c=>{let t=tmFor(c.code);if(!t){allMatched=false;return}tmSub+=tmPrice(t,c.qty)*c.qty});
  let tmTotal=tmSub+(Number($('tmShipping').value)||0)/split;
  $('gxAud').textContent=aud(gxTotal*fx);
@@ -84,5 +109,5 @@ function drawCart(){
  if(!cart.length)$('cartCompare').innerHTML=''; else if(!allMatched)$('cartCompare').innerHTML='<b>Some selected items are not in the TRANMOO catalogue, so a complete cart total cannot be compared.</b>'; else {let d=Math.abs(gxTotal-tmTotal);$('cartCompare').innerHTML=gxTotal===tmTotal?'<b>Both carts cost the same.</b>':gxTotal<tmTotal?`<b>GENXELL saves ${aud(d*fx)}</b>.`:`<b>TRANMOO saves ${aud(d*fx)}</b>.`;}
 }
 function render(){$('categorySelect').value='Peptides';populateProducts();const rt=items.find(x=>x.name==='Retatrutide'&&/^10mg\b/i.test(x.dosage||''));if(rt){$('productSelect').value=productKey(rt);populateStrengths();$('strengthSelect').value=rt.code;products()}drawCart()}
-$('categorySelect').addEventListener('change',populateProducts);$('productSelect').addEventListener('change',populateStrengths);$('strengthSelect').addEventListener('change',products);$('fx').addEventListener('input',()=>{products();drawCart()});$('shipping').addEventListener('input',drawCart);$('tmShipping').addEventListener('input',drawCart);$('shipSplit').addEventListener('change',drawCart);render();
+$('categorySelect').addEventListener('change',populateProducts);$('productSelect').addEventListener('change',populateStrengths);$('strengthSelect').addEventListener('change',products);$('fx').addEventListener('input',()=>{products();drawCart()});$('shipping').addEventListener('input',drawCart);$('tmShipping').addEventListener('input',drawCart);document.querySelectorAll('input[name="shipSplit"]').forEach(x=>x.addEventListener('change',drawCart));render();
 </script></body></html>
